@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Student Planner</title>
+    <style>
+        :root {
+            --primary-red: #ff6b6b;
+            --paper-white: #ffffff;
+            --ink-blue: #1e3799;
+            --pencil-yellow: #fadb5f;
+            --highlighter: rgba(85, 239, 196, 0.4);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e0e5ec; /* Neumorphic background */
+            background-image:
+                linear-gradient(90deg, rgba(255,255,255,.5) 50%, transparent 50%),
+                linear-gradient(rgba(255,255,255,.5) 50%, transparent 50%);
+            background-size: 30px 30px;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The 3D Notebook Stack Effect */
+        .notebook-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            padding: 10px;
+        }
+
+        .notebook-container::before {
+            content: '';
+            position: absolute;
+            top: 20px; right: 0; bottom: -10px; left: 20px;
+            background: #d1d9e6;
+            border-radius: 10px;
+            z-index: -1;
+            transform: rotate(2deg);
+        }
+
+        .notebook-page {
+            background: var(--paper-white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
+            border-left: 25px solid var(--primary-red);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Lined Paper Lines */
+        .notebook-page {
+            background-image: linear-gradient(#e5e5e5 1px, transparent 1px);
+            background-size: 100% 2.5rem;
+        }
+
+        h1 {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2.5rem;
+            color: #2d3436;
+            margin: 0 0 20px 0;
+            text-align: center;
+            transform: rotate(-2deg);
+            background: var(--highlighter);
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* Form Styling */
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #636e72;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+            border-bottom: 2px solid var(--pencil-yellow);
+            font-size: 1.2rem;
+            padding: 8px 0;
+            color: var(--ink-blue);
+            font-family: 'Courier New', Courier, monospace;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-bottom-color: var(--primary-red);
+            background: rgba(250, 219, 95, 0.1);
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dfe6e9;
+            border-radius: 5px;
+            background: #f9f9f9;
+            cursor: pointer;
+        }
+
+        /* The "Submit" Clip */
+        button {
+            width: 100%;
+            background: #2d3436;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button:hover {
+            background: var(--ink-blue);
+            transform: scale(1.02);
+        }
+
+        /* Decorative Elements */
+        .paper-clip {
+            position: absolute;
+            top: -15px;
+            right: 40px;
+            width: 30px;
+            height: 60px;
+            border: 3px solid #b2bec3;
+            border-radius: 20px;
+            z-index: 20;
+            background: transparent;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            left: -15px;
+            background: var(--pencil-yellow);
+            padding: 5px 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            transform: rotate(-45deg);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .task-preview {
+            margin-top: 30px;
+            border-top: 1px dashed #ccc;
+            padding-top: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--ink-blue);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="notebook-container">
+        <div class="paper-clip"></div>
+
+        <div class="notebook-page">
+            <div class="status-badge">STUDY MODE</div>
+
+            <h1>My Assignment Log</h1>
+
+            <form method="post" action="/submit_task">
+                <div class="input-group">
+                    <label>Task Description</label>
+                    <input type="text" name="task" placeholder="e.g. Research Quantum Physics" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Priority Level</label>
+                    <select name="priority">
+                        <option value="High">🔴 High Priority (Due ASAP)</option>
+                        <option value="Medium">🟡 Medium (This Week)</option>
+                        <option value="Low">🟢 Low (Long-term)</option>
+                    </select>
+                </div>
+
+                <button type="submit" name="submit">
+                    <span>SUBMIT</span> 📌
+                </button>
+            </form>
+
+            <div class="task-preview">
+                <small style="color: #636e72;">Recent entries:</small>
+                <div style="margin-top: 10px; opacity: 0.6;">
+                    - Read Chapter 5 [Medium] <br>
+                    - Lab Report PDF [High]
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
